@@ -1,3 +1,5 @@
+# Local Deep Learning Backend Requirements (Offline Inference)
+# Note: Root requirements.txt is kept lightweight for Vercel Serverless.
 fastapi>=0.110.0
 uvicorn>=0.28.0
 python-multipart>=0.0.9
@@ -7,9 +9,7 @@ pillow>=10.0.0
 opencv-python-headless>=4.9.0
 torch>=2.2.0
 torchvision>=0.17.0
-torchaudio>=2.2.0
-timm>=0.9.16
+transformers>=4.38.0
+accelerate>=0.28.0
 librosa>=0.10.1
-matplotlib>=3.8.0
-scipy>=1.11.0
-piexif>=1.1.3
+timm>=0.9.16

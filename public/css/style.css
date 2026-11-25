@@ -1,0 +1,64 @@
+/* Deepfake Awareness & Detection System - Cyber Forensic UI */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg-primary: #070c16;
+  --bg-surface: #0d1524;
+  --bg-elevated: #131e33;
+  --border-color: #1e293b;
+  --cyan-accent: #00e5ff;
+  --cyan-glow: rgba(0, 229, 255, 0.2);
+  --rose-accent: #f43f5e;
+  --rose-glow: rgba(244, 63, 94, 0.25);
+  --emerald-accent: #10b981;
+  --emerald-glow: rgba(16, 185, 129, 0.25);
+  --amber-accent: #f59e0b;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: #f1f5f9;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.panel {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+}
+
+.panel-elevated {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+}
+
+.glow-rose {
+  box-shadow: 0 0 25px var(--rose-glow);
+}
+
+.glow-emerald {
+  box-shadow: 0 0 25px var(--emerald-glow);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 25px var(--cyan-glow);
+}
+
+/* Custom Cyber Range Input */
+input[type="range"] {
+  accent-color: var(--cyan-accent);
+}
+
+/* Subtle Grid Canvas Pattern */
+.cyber-grid {
+  background-size: 24px 24px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 229, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 229, 255, 0.04) 1px, transparent 1px);
+}

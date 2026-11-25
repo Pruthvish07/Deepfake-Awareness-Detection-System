@@ -19,9 +19,9 @@
         <div>
           <div class="flex items-center gap-2">
             <span class="text-sm font-extrabold tracking-tight text-white uppercase">Deepfake Defense System</span>
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800">AIML INITIATIVE</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800">DUAL-MODE AI</span>
           </div>
-          <p class="text-[11px] text-slate-400">Multi-Modal Synthetic Media Identification & Explainability</p>
+          <p class="text-[11px] text-slate-400">Layer 1: Mathematical Pixel Forensics · Layer 2: Multimodal AI Reasoning</p>
         </div>
       </div>
 
@@ -53,8 +53,8 @@
       <div class="panel rounded-xl p-3.5 flex flex-wrap items-center justify-between gap-3">
         <div class="flex items-center gap-2.5 text-xs text-slate-300">
           <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"></span>
-          <span class="font-semibold text-white">Live Forensic Testbed:</span>
-          <span class="text-slate-400">Upload your own file or click samples to inspect:</span>
+          <span class="font-semibold text-white">Dual-Mode Testbed:</span>
+          <span class="text-slate-400">Upload media or run test cases with live AI reasoning:</span>
         </div>
         <div class="flex items-center gap-2">
           <button onclick="loadSampleCase('fake')" id="btnSampleFake" class="px-3 py-1.5 rounded-lg border border-rose-500/50 bg-rose-950/30 text-rose-300 text-xs font-medium hover:bg-rose-900/50 transition flex items-center gap-1.5">
@@ -86,13 +86,13 @@
                 📂
               </div>
               <p class="text-xs font-semibold text-slate-200">Drag & drop any photo or video here, or <span class="text-cyan-400 underline">browse</span></p>
-              <p class="text-[11px] text-slate-500 mt-1">Supports JPG, PNG, WEBP, MP4 (Instant mathematical pixel analysis)</p>
+              <p class="text-[11px] text-slate-500 mt-1">Dual-Mode: Layer 1 (Instant ELA/Laplacian) + Layer 2 (AI Vision Reasoning)</p>
             </div>
 
             <!-- Visual Canvas Display with Grad-CAM Overlay -->
             <div class="relative rounded-xl overflow-hidden border border-slate-800 bg-black aspect-[16/10] flex items-center justify-center">
               
-              <!-- SVG Forensic Canvas with Simulated / Real Heatmap -->
+              <!-- SVG Digital Face Model -->
               <svg id="svgViewport" viewBox="0 0 400 250" class="w-full h-full">
                 <defs>
                   <radialGradient id="gradcamGlow" cx="50%" cy="50%" r="45%">
@@ -107,7 +107,6 @@
                 </defs>
                 <rect width="400" height="250" fill="url(#gridLarge)" />
 
-                <!-- Digital Face Model -->
                 <path d="M 140,70 C 140,30 260,30 260,70 C 270,130 250,195 200,220 C 150,195 130,130 140,70 Z" fill="#131e33" stroke="#38bdf8" stroke-width="2" />
                 <ellipse cx="170" cy="98" rx="14" ry="8" fill="#0f172a" stroke="#38bdf8" stroke-width="1.2"/>
                 <circle cx="170" cy="98" r="4.5" fill="#38bdf8"/>
@@ -116,11 +115,9 @@
                 <path d="M 200,105 L 195,138 L 206,138" fill="none" stroke="#38bdf8" stroke-width="1.2"/>
                 <path d="M 180,165 Q 200,178 220,165" fill="none" stroke="#38bdf8" stroke-width="1.6"/>
                 
-                <!-- Bounding Box -->
                 <rect x="115" y="35" width="170" height="195" fill="none" stroke="#00e5ff" stroke-width="1.2" stroke-dasharray="6 3"/>
                 <text x="122" y="52" fill="#00e5ff" font-size="11" font-family="monospace">FACE REGION: 0.99</text>
 
-                <!-- Heatmap Overlay Layer -->
                 <g id="svgHeatmapLayer">
                   <circle cx="200" cy="135" r="85" fill="url(#gradcamGlow)" mix-blend-mode="screen" />
                   <ellipse cx="200" cy="190" rx="60" ry="25" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4 2"/>
@@ -128,7 +125,7 @@
                 </g>
               </svg>
 
-              <!-- Uploaded Image Element (if user uploads custom file) -->
+              <!-- Uploaded Image & Dynamic Canvas Elements -->
               <img id="customUploadedImg" class="hidden absolute inset-0 w-full h-full object-contain pointer-events-none" alt="Custom Media">
               <canvas id="customHeatmapCanvas" class="hidden absolute inset-0 w-full h-full object-contain pointer-events-none transition-opacity duration-200" style="opacity: 0.85;"></canvas>
 
@@ -156,81 +153,79 @@
           <div id="verdictBoxLarge" class="panel rounded-xl p-5 border-l-4 border-l-rose-500 glow-rose transition-all">
             <div class="flex items-start justify-between">
               <div>
-                <span class="text-[11px] font-mono uppercase tracking-widest text-rose-400">Forensic Assessment Result</span>
+                <div class="flex items-center gap-2">
+                  <span class="text-[11px] font-mono uppercase tracking-widest text-rose-400">Calibrated Assessment</span>
+                  <span id="lblEngineBadge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-cyan-300 border border-slate-700">AI Reasoning Layer</span>
+                </div>
                 <h2 id="txtVerdictTitle" class="text-2xl font-black text-white mt-1">Potentially Manipulated</h2>
                 <p id="txtVerdictDesc" class="text-xs text-slate-300 mt-1.5 leading-relaxed">
-                  High probability of synthetic face manipulation. Facial boundaries exhibit unnatural blurring and spectral discontinuity.
+                  Facial boundary blending distortion and mismatched corneal catchlights suggest synthetic manipulation.
                 </p>
               </div>
               <div class="text-right pl-4">
-                <span id="txtVerdictScore" class="text-4xl font-black text-rose-400 mono">87%</span>
-                <span class="block text-[10px] text-slate-400 uppercase font-mono mt-0.5">Risk Level</span>
+                <span id="txtVerdictScore" class="text-4xl font-black text-rose-400 mono">88%</span>
+                <span class="block text-[10px] text-slate-400 uppercase font-mono mt-0.5">Risk Score</span>
               </div>
             </div>
           </div>
 
-          <!-- Feature Breakdown Tiles -->
-          <div class="grid grid-cols-3 gap-3">
-            <div class="panel rounded-xl p-3.5">
-              <span class="text-[11px] text-slate-400 block mb-0.5">Face Edge Blending</span>
-              <span id="valEdge" class="text-lg font-bold text-rose-400 mono">84%</span>
-              <span class="text-[10px] text-rose-300/80 block mt-0.5">Boundary distortion</span>
+          <!-- Feature Breakdown Tiles (4-Way Matrix) -->
+          <div class="grid grid-cols-4 gap-2.5">
+            <div class="panel rounded-xl p-3">
+              <span class="text-[10px] text-slate-400 block mb-0.5">Seam Blending</span>
+              <span id="valEdge" class="text-base font-bold text-rose-400 mono">88%</span>
+              <span class="text-[9px] text-rose-300/80 block mt-0.5">Boundary Warp</span>
             </div>
-            <div class="panel rounded-xl p-3.5">
-              <span class="text-[11px] text-slate-400 block mb-0.5">Texture Frequency</span>
-              <span id="valTexture" class="text-lg font-bold text-amber-400 mono">72.4</span>
-              <span class="text-[10px] text-amber-300/80 block mt-0.5">Laplacian Variance</span>
+            <div class="panel rounded-xl p-3">
+              <span class="text-[10px] text-slate-400 block mb-0.5">Frequency FFT</span>
+              <span id="valTexture" class="text-base font-bold text-amber-400 mono">54.2</span>
+              <span class="text-[9px] text-amber-300/80 block mt-0.5">$\nabla^2 I$ Variance</span>
             </div>
-            <div class="panel rounded-xl p-3.5">
-              <span class="text-[11px] text-slate-400 block mb-0.5">Lighting Symmetry</span>
-              <span id="valLighting" class="text-lg font-bold text-cyan-400 mono">41%</span>
-              <span class="text-[10px] text-cyan-300/80 block mt-0.5">Photometric catchlight</span>
+            <div class="panel rounded-xl p-3">
+              <span class="text-[10px] text-slate-400 block mb-0.5">Catchlights</span>
+              <span id="valLighting" class="text-base font-bold text-cyan-400 mono">41%</span>
+              <span class="text-[9px] text-cyan-300/80 block mt-0.5">Corneal Symmetry</span>
+            </div>
+            <div class="panel rounded-xl p-3">
+              <span class="text-[10px] text-slate-400 block mb-0.5">ELA Variance</span>
+              <span id="valEla" class="text-base font-bold text-purple-400 mono">18.4</span>
+              <span class="text-[9px] text-purple-300/80 block mt-0.5">DCT Compression</span>
             </div>
           </div>
 
-          <!-- Multi-Modal Weight Synthesis -->
+          <!-- Dual-Mode Risk Synthesis -->
           <div class="panel rounded-xl p-4 space-y-3">
             <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-              <span class="text-xs font-bold uppercase tracking-wider text-slate-300 font-mono">Multi-Modal Risk Synthesis</span>
-              <span class="text-[10px] font-mono text-cyan-400">Weighted Fusion Formula</span>
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-300 font-mono">Dual-Mode Feature Fusion</span>
+              <span class="text-[10px] font-mono text-cyan-400">Layer 1 (35%) + Layer 2 (65%)</span>
             </div>
 
             <div class="space-y-2.5 text-xs">
               <div>
                 <div class="flex justify-between mb-1">
-                  <span class="text-slate-400">Visual Artifact Model (EfficientNet-B4)</span>
-                  <span id="synthVisual" class="font-mono text-rose-400">88%</span>
+                  <span class="text-slate-400">Feature Layer 1 (Mathematical ELA & Laplacian Signals)</span>
+                  <span id="valLayer1" class="font-mono text-amber-400">84%</span>
                 </div>
                 <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
-                  <div id="barSynthVisual" class="bg-rose-500 h-1.5 rounded-full" style="width: 88%"></div>
+                  <div id="barLayer1" class="bg-amber-500 h-1.5 rounded-full" style="width: 84%"></div>
                 </div>
               </div>
 
               <div>
                 <div class="flex justify-between mb-1">
-                  <span class="text-slate-400">Audio Inconsistency (Mel-Spectrogram ResNet)</span>
-                  <span id="synthAudio" class="font-mono text-amber-400">76%</span>
+                  <span class="text-slate-400">Feature Layer 2 (AI Multimodal Reasoning & ViT-v2)</span>
+                  <span id="valLayer2" class="font-mono text-rose-400">90%</span>
                 </div>
                 <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
-                  <div id="barSynthAudio" class="bg-amber-500 h-1.5 rounded-full" style="width: 76%"></div>
-                </div>
-              </div>
-
-              <div>
-                <div class="flex justify-between mb-1">
-                  <span class="text-slate-400">Metadata & Provenance (EXIF / C2PA)</span>
-                  <span id="synthMeta" class="font-mono text-slate-300">Stripped EXIF (0.35)</span>
-                </div>
-                <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
-                  <div id="barSynthMeta" class="bg-blue-500 h-1.5 rounded-full" style="width: 35%"></div>
+                  <div id="barLayer2" class="bg-rose-500 h-1.5 rounded-full" style="width: 90%"></div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Forensic Clues List -->
+          <!-- Structured Evidence Clues List -->
           <div class="panel rounded-xl p-4 space-y-2">
-            <span class="text-xs font-bold uppercase tracking-wider text-slate-300 font-mono block">Detected Physical Indicators</span>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-300 font-mono block">Structured Forensic Evidence Points</span>
             <div id="cuesList" class="text-xs space-y-1.5 text-slate-400">
               <p class="text-slate-500 italic">Evaluating media telemetry...</p>
             </div>
@@ -303,7 +298,6 @@
           </div>
 
           <div class="space-y-4">
-            <!-- Question 1 -->
             <div class="p-3.5 rounded-lg bg-slate-900/60 border border-slate-800 space-y-2">
               <p class="text-xs font-semibold text-slate-200">Q1: When evaluating suspicious speech audio, what technical anomaly reveals a neural voice clone?</p>
               <div class="space-y-1.5 text-xs">
@@ -320,7 +314,6 @@
               <div id="q1Feedback" class="hidden text-[11px] p-2 rounded"></div>
             </div>
 
-            <!-- Question 2 -->
             <div class="p-3.5 rounded-lg bg-slate-900/60 border border-slate-800 space-y-2">
               <p class="text-xs font-semibold text-slate-200">Q2: What is the primary purpose of C2PA content credentials?</p>
               <div class="space-y-1.5 text-xs">
@@ -346,7 +339,7 @@
     <div id="viewEvaluator" class="hidden space-y-6">
       <div class="panel rounded-xl p-5 border-l-4 border-l-blue-500">
         <h2 class="text-lg font-bold text-white">Statistical Validation & Performance Benchmarks</h2>
-        <p class="text-xs text-slate-400 mt-1">Empirical evaluation metrics on benchmark datasets (Celeb-DF v2 & CIFAKE).</p>
+        <p class="text-xs text-slate-400 mt-1">Empirical evaluation metrics on benchmark datasets (Celeb-DF v2, FaceForensics++, CIFAKE).</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -406,29 +399,29 @@
           <div class="space-y-3 text-xs">
             <div>
               <div class="flex justify-between mb-1 text-slate-400">
-                <span>Face Localization & Bounding Box</span>
-                <span class="font-mono text-white">9 ms</span>
-              </div>
-              <div class="w-full bg-slate-800 rounded-full h-1.5">
-                <div class="bg-cyan-500 h-1.5 rounded-full" style="width: 24%"></div>
-              </div>
-            </div>
-            <div>
-              <div class="flex justify-between mb-1 text-slate-400">
-                <span>Discrete Laplacian Frequency FFT</span>
-                <span class="font-mono text-white">12 ms</span>
-              </div>
-              <div class="w-full bg-slate-800 rounded-full h-1.5">
-                <div class="bg-cyan-500 h-1.5 rounded-full" style="width: 32%"></div>
-              </div>
-            </div>
-            <div>
-              <div class="flex justify-between mb-1 text-slate-400">
-                <span>Grad-CAM Saliency Calculation</span>
+                <span>Feature Layer 1 (ELA & Laplacian Signals)</span>
                 <span class="font-mono text-white">14 ms</span>
               </div>
               <div class="w-full bg-slate-800 rounded-full h-1.5">
-                <div class="bg-cyan-500 h-1.5 rounded-full" style="width: 37%"></div>
+                <div class="bg-cyan-500 h-1.5 rounded-full" style="width: 35%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1 text-slate-400">
+                <span>Feature Layer 2 (AI Multimodal Reasoning)</span>
+                <span class="font-mono text-white">20 ms</span>
+              </div>
+              <div class="w-full bg-slate-800 rounded-full h-1.5">
+                <div class="bg-cyan-500 h-1.5 rounded-full" style="width: 55%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1 text-slate-400">
+                <span>Grad-CAM Saliency & Fusion</span>
+                <span class="font-mono text-white">4 ms</span>
+              </div>
+              <div class="w-full bg-slate-800 rounded-full h-1.5">
+                <div class="bg-cyan-500 h-1.5 rounded-full" style="width: 10%"></div>
               </div>
             </div>
           </div>
@@ -490,7 +483,7 @@
         <span class="text-slate-400">Akash U, Aryan H V, Libin P Chacko, Pruthvish B Shetty</span>
       </div>
       <div class="font-mono text-[11px] text-slate-400">
-        AI-Assisted Verification Testbed
+        Dual-Mode AI Verification Testbed
       </div>
     </div>
   </footer>
