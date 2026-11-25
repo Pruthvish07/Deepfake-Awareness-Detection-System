@@ -5,30 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Deepfake Awareness & Detection Engine</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    body { background-color: #070c16; color: #f1f5f9; font-family: 'Inter', sans-serif; }
-    .mono { font-family: 'JetBrains Mono', monospace; }
-    .panel { background-color: #0d1524; border: 1px solid #1e293b; }
-    .glow-rose { box-shadow: 0 0 25px rgba(244, 63, 94, 0.25); }
-    .glow-emerald { box-shadow: 0 0 25px rgba(16, 185, 129, 0.25); }
-    .glow-cyan { box-shadow: 0 0 25px rgba(6, 182, 212, 0.25); }
-  </style>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="min-h-screen antialiased flex flex-col justify-between selection:bg-cyan-500 selection:text-black">
 
@@ -77,7 +54,7 @@
         <div class="flex items-center gap-2.5 text-xs text-slate-300">
           <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"></span>
           <span class="font-semibold text-white">Live Forensic Testbed:</span>
-          <span class="text-slate-400">Upload your own file or trigger test cases below:</span>
+          <span class="text-slate-400">Upload your own file or click samples to inspect:</span>
         </div>
         <div class="flex items-center gap-2">
           <button onclick="loadSampleCase('fake')" id="btnSampleFake" class="px-3 py-1.5 rounded-lg border border-rose-500/50 bg-rose-950/30 text-rose-300 text-xs font-medium hover:bg-rose-900/50 transition flex items-center gap-1.5">
@@ -109,7 +86,7 @@
                 📂
               </div>
               <p class="text-xs font-semibold text-slate-200">Drag & drop any photo or video here, or <span class="text-cyan-400 underline">browse</span></p>
-              <p class="text-[11px] text-slate-500 mt-1">Supports JPG, PNG, WEBP, MP4 (Instant client-side & serverless forensics)</p>
+              <p class="text-[11px] text-slate-500 mt-1">Supports JPG, PNG, WEBP, MP4 (Instant mathematical pixel analysis)</p>
             </div>
 
             <!-- Visual Canvas Display with Grad-CAM Overlay -->
@@ -144,7 +121,7 @@
                 <text x="122" y="52" fill="#00e5ff" font-size="11" font-family="monospace">FACE REGION: 0.99</text>
 
                 <!-- Heatmap Overlay Layer -->
-                <g id="heatmapLayer">
+                <g id="svgHeatmapLayer">
                   <circle cx="200" cy="135" r="85" fill="url(#gradcamGlow)" mix-blend-mode="screen" />
                   <ellipse cx="200" cy="190" rx="60" ry="25" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4 2"/>
                   <text x="145" y="235" fill="#f87171" font-size="10" font-family="monospace">⚠️ BOUNDARY WARP SPLICING</text>
@@ -251,18 +228,12 @@
             </div>
           </div>
 
-          <!-- Action Prompt -->
-          <div class="p-4 rounded-xl border border-cyan-900/40 bg-cyan-950/20 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-              <span class="text-2xl">⚠️</span>
-              <div>
-                <h4 class="text-xs font-bold text-cyan-300">Responsible Sharing Prompt</h4>
-                <p class="text-[11px] text-slate-400">High risk detected. Avoid forwarding without secondary confirmation.</p>
-              </div>
+          <!-- Forensic Clues List -->
+          <div class="panel rounded-xl p-4 space-y-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-300 font-mono block">Detected Physical Indicators</span>
+            <div id="cuesList" class="text-xs space-y-1.5 text-slate-400">
+              <p class="text-slate-500 italic">Evaluating media telemetry...</p>
             </div>
-            <button onclick="switchTab('awareness')" class="px-3 py-1.5 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/50 text-cyan-300 text-xs font-semibold transition">
-              Read Defense Guide →
-            </button>
           </div>
 
         </div>
@@ -524,224 +495,7 @@
     </div>
   </footer>
 
-  <!-- Client-side Logic (Autonomous & Server-Connected) -->
-  <script>
-    let heatmapVisible = true;
-    let quizScore = 0;
-    const answered = { 1: false, 2: false };
-
-    function switchTab(tab) {
-      document.getElementById('viewScanner').classList.add('hidden');
-      document.getElementById('viewAwareness').classList.add('hidden');
-      document.getElementById('viewEvaluator').classList.add('hidden');
-      document.getElementById('viewTeam').classList.add('hidden');
-
-      const tabs = ['Scanner', 'Awareness', 'Evaluator', 'Team'];
-      tabs.forEach(t => {
-        const btn = document.getElementById('tabBtn' + t);
-        btn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition';
-      });
-
-      const activeBtn = document.getElementById('tabBtn' + tab.charAt(0).toUpperCase() + tab.slice(1));
-      activeBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-cyan-500 text-black shadow-sm transition';
-
-      if (tab === 'scanner') document.getElementById('viewScanner').classList.remove('hidden');
-      if (tab === 'awareness') document.getElementById('viewAwareness').classList.remove('hidden');
-      if (tab === 'evaluator') document.getElementById('viewEvaluator').classList.remove('hidden');
-      if (tab === 'team') document.getElementById('viewTeam').classList.remove('hidden');
-    }
-
-    function toggleHeatmap() {
-      heatmapVisible = !heatmapVisible;
-      const svgLayer = document.getElementById('heatmapLayer');
-      const canvasLayer = document.getElementById('customHeatmapCanvas');
-      const dot = document.getElementById('dotIndicator');
-      const lbl = document.getElementById('lblHeatmap');
-      
-      if (heatmapVisible) {
-        svgLayer.style.display = 'block';
-        canvasLayer.style.display = 'block';
-        dot.className = 'w-2 h-2 rounded-full bg-rose-500';
-        lbl.innerText = 'Grad-CAM Heatmap: ON';
-      } else {
-        svgLayer.style.display = 'none';
-        canvasLayer.style.display = 'none';
-        dot.className = 'w-2 h-2 rounded-full bg-slate-500';
-        lbl.innerText = 'Grad-CAM Heatmap: OFF';
-      }
-    }
-
-    function changeOpacity(val) {
-      const canvasLayer = document.getElementById('customHeatmapCanvas');
-      canvasLayer.style.opacity = val / 100;
-    }
-
-    // Drag and Drop
-    const dropArea = document.getElementById('dropArea');
-    ['dragenter', 'dragover'].forEach(n => dropArea.addEventListener(n, e => { e.preventDefault(); dropArea.classList.add('border-cyan-400', 'bg-cyan-950/20'); }));
-    ['dragleave', 'drop'].forEach(n => dropArea.addEventListener(n, e => { e.preventDefault(); dropArea.classList.remove('border-cyan-400', 'bg-cyan-950/20'); }));
-    dropArea.addEventListener('drop', e => {
-      if (e.dataTransfer && e.dataTransfer.files[0]) handleUserUpload({ target: { files: e.dataTransfer.files } });
-    });
-
-    async function handleUserUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const badge = document.getElementById('scanStatusBadge');
-      badge.innerText = 'PROCESSING: ' + file.name.slice(0, 15).toUpperCase();
-      badge.className = 'text-[11px] font-mono px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800';
-
-      // Read image client-side to render immediately
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const img = document.getElementById('customUploadedImg');
-        img.src = e.target.result;
-        img.classList.remove('hidden');
-        document.getElementById('svgViewport').classList.add('hidden');
-
-        // Draw simulated Grad-CAM heatmap over uploaded image via HTML5 Canvas
-        const canvas = document.getElementById('customHeatmapCanvas');
-        canvas.classList.remove('hidden');
-        const tempImg = new Image();
-        tempImg.onload = function() {
-          canvas.width = tempImg.width;
-          canvas.height = tempImg.height;
-          const ctx = canvas.getContext('2d');
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          
-          // Draw high-attention radial gradient on face center
-          const cx = canvas.width / 2;
-          const cy = canvas.height * 0.45;
-          const rad = Math.min(canvas.width, canvas.height) * 0.35;
-          const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, rad);
-          grad.addColorStop(0, 'rgba(239, 68, 68, 0.85)');
-          grad.addColorStop(0.5, 'rgba(245, 158, 11, 0.65)');
-          grad.addColorStop(0.85, 'rgba(59, 130, 246, 0.25)');
-          grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-          ctx.fillStyle = grad;
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-        };
-        tempImg.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
-
-      // Attempt serverless API call
-      const formData = new FormData();
-      formData.append('file', file);
-
-      try {
-        const resp = await fetch('/api/scan', { method: 'POST', body: formData });
-        if (resp.ok) {
-          const data = await resp.json();
-          renderAssessment(data);
-          return;
-        }
-      } catch (err) {
-        // Offline / serverless cold-start fallback
-      }
-
-      // Intelligent Client-Side Assessment Fallback
-      setTimeout(() => {
-        // Heuristic analysis based on file attributes
-        const isSuspicious = file.size < 80000 || file.name.toLowerCase().includes('fake') || file.name.toLowerCase().includes('synth');
-        const fallbackData = isSuspicious ? {
-          verdict: 'Potentially Manipulated',
-          risk_score: 0.84,
-          confidence_percentage: 84,
-          recommendation: 'Synthetic low-pass blurring and anomalous boundary gradients detected around facial perimeter.',
-          metrics: { visual_risk: 0.85, audio_risk: 0.70, laplacian_variance: 52.1, lighting_symmetry: 45.0 }
-        } : {
-          verdict: 'Likely Authentic',
-          risk_score: 0.14,
-          confidence_percentage: 14,
-          recommendation: 'Visual texture gradients and photometric symmetry align with genuine optical sensor capture.',
-          metrics: { visual_risk: 0.12, audio_risk: 0.10, laplacian_variance: 260.4, lighting_symmetry: 91.2 }
-        };
-        renderAssessment(fallbackData);
-      }, 500);
-    }
-
-    function loadSampleCase(type) {
-      document.getElementById('customUploadedImg').classList.add('hidden');
-      document.getElementById('customHeatmapCanvas').classList.add('hidden');
-      document.getElementById('svgViewport').classList.remove('hidden');
-
-      if (type === 'fake') {
-        renderAssessment({
-          verdict: 'Potentially Manipulated',
-          risk_score: 0.87,
-          confidence_percentage: 87,
-          recommendation: 'High probability of synthetic face manipulation. Facial boundaries exhibit unnatural blurring and spectral discontinuity.',
-          metrics: { visual_risk: 0.88, audio_risk: 0.76, laplacian_variance: 54.2, lighting_symmetry: 41.5 }
-        });
-        document.getElementById('heatmapLayer').style.display = 'block';
-      } else {
-        renderAssessment({
-          verdict: 'Likely Authentic',
-          risk_score: 0.12,
-          confidence_percentage: 12,
-          recommendation: 'Media exhibits natural facial motion, consistent lighting catchlights, and harmonic acoustic distribution.',
-          metrics: { visual_risk: 0.11, audio_risk: 0.14, laplacian_variance: 248.5, lighting_symmetry: 89.4 }
-        });
-        document.getElementById('heatmapLayer').style.display = 'none';
-      }
-    }
-
-    function renderAssessment(data) {
-      const box = document.getElementById('verdictBoxLarge');
-      const title = document.getElementById('txtVerdictTitle');
-      const desc = document.getElementById('txtVerdictDesc');
-      const score = document.getElementById('txtVerdictScore');
-      const badge = document.getElementById('scanStatusBadge');
-
-      title.innerText = data.verdict;
-      desc.innerText = data.recommendation;
-      score.innerText = data.confidence_percentage + '%';
-
-      if (data.verdict === 'Potentially Manipulated') {
-        box.className = 'panel rounded-xl p-5 border-l-4 border-l-rose-500 glow-rose transition-all';
-        title.className = 'text-2xl font-black text-rose-400 mt-1';
-        score.className = 'text-4xl font-black text-rose-400 mono';
-        badge.innerText = 'ARTIFACT DETECTED';
-        badge.className = 'text-[11px] font-mono px-2 py-0.5 rounded bg-rose-950 text-rose-400 border border-rose-800/80';
-      } else {
-        box.className = 'panel rounded-xl p-5 border-l-4 border-l-emerald-500 glow-emerald transition-all';
-        title.className = 'text-2xl font-black text-emerald-400 mt-1';
-        score.className = 'text-4xl font-black text-emerald-400 mono';
-        badge.innerText = 'PASSED ALL CHECKS';
-        badge.className = 'text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/80';
-      }
-
-      document.getElementById('valEdge').innerText = Math.round(data.metrics.visual_risk * 100) + '%';
-      document.getElementById('valTexture').innerText = data.metrics.laplacian_variance;
-      document.getElementById('valLighting').innerText = Math.round(data.metrics.lighting_symmetry) + '%';
-
-      document.getElementById('synthVisual').innerText = Math.round(data.metrics.visual_risk * 100) + '%';
-      document.getElementById('barSynthVisual').style.width = Math.round(data.metrics.visual_risk * 100) + '%';
-
-      document.getElementById('synthAudio').innerText = Math.round(data.metrics.audio_risk * 100) + '%';
-      document.getElementById('barSynthAudio').style.width = Math.round(data.metrics.audio_risk * 100) + '%';
-    }
-
-    function answerQuiz(qNum, isCorrect) {
-      if (answered[qNum]) return;
-      answered[qNum] = true;
-
-      const fb = document.getElementById('q' + qNum + 'Feedback');
-      fb.classList.remove('hidden');
-
-      if (isCorrect) {
-        quizScore++;
-        fb.className = "text-[11px] p-2 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800 font-medium";
-        fb.innerHTML = "✅ <strong>Correct!</strong> Neural vocoders frequently omit frequencies above 8 kHz and lack biological breath cues.";
-      } else {
-        fb.className = "text-[11px] p-2 rounded bg-rose-950/80 text-rose-300 border border-rose-800 font-medium";
-        fb.innerHTML = "❌ <strong>Incorrect.</strong> Review the 5-point verification checklist on the left.";
-      }
-
-      document.getElementById('quizScoreBadge').innerText = "Score: " + quizScore + " / 2";
-    }
-  </script>
+  <script src="js/forensics.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
